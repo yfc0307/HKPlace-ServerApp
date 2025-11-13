@@ -53,6 +53,10 @@ body {
     background: #28a745;
 }
 
+.navbar .user-btn {
+    background: #42ca82;
+}
+
 .navbar .login-btn {
     background: #27d5bb;
 }
