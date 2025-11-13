@@ -15,6 +15,7 @@
             <% if (!req.user) { %>
                 <a href="/oauth/google" class="login-btn">Login with Google</a>
             <% } else { %>
+                <a href="/user" class="user-btn">Profile</a>
                 <a href="/logout" class="login-btn">Logout</a>
             <% } %>
         </div>
@@ -27,3 +28,4 @@
     <% } %>
 </body>
 </html>
+
