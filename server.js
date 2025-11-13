@@ -31,12 +31,24 @@ app.get('/', (req, res) => {
 });
 
 app.get('/home',(req,res) => {
-    res.render('home', {req: req});
+    if (!req.isAuthenticated()) {
+        res.render('home', {req: req, msg: "Please login to unlock all features."});
+    } else {
+        res.render('home', {req: req, user: req.user, msg: `Welcome, ${req.user.displayName}.`});
+    }
 });
 
 app.get('/user', isOauthed, (req, res) => {
-    console.log(`Logged in as ${req.user.email}`);
+    console.log(`Logged in as ${req.user.id}, ${req.user.email}`);
     res.render('user', {user: req.user, req: req});
+});
+
+app.get('/game', isOauthed, (req,res) => {
+    res.render('game', {req: req});
+});
+
+app.get('/study', isOauthed, (req,res) => {
+    res.render('study', {req: req});
 });
 
 app.get('/oauth/google/callback', 

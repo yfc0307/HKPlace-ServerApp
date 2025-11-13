@@ -22,7 +22,7 @@
     <% if (!req.user) { %>
         <h3>Home, Please Login!</h3>
     <% } else { %>
-        <h3>Home, <%= user.email %>!</h3>
+        <h3>Home, <%= user.displayName %>!</h3>
         <a href="/logout">Logout</a>
     <% } %>
 </body>

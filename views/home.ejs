@@ -75,12 +75,14 @@
             <% if (!req.user) { %>
                 <a href="/oauth/google" class="login-btn">Login with Google</a>
             <% } else { %>
+                <a href="/user" class="user-btn">Profile</a>
                 <a href="/logout" class="login-btn">Logout</a>
             <% } %>
         </div>
     </nav>
     <div class="content">
         <h1>Discover Hong Kong</h1>
+        <h3><%= msg %></h3>
         <p class="description">Test your knowledge of Hong Kong's iconic locations through an interactive guessing game.</p>
         <% if (req.user) { %>
             <a href="/game" class="start-game-btn">START GAME</a>
