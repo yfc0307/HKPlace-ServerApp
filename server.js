@@ -58,7 +58,7 @@ app.get('/oauth/google/callback',
 );
 
 app.get('/oauth/success', (req,res) => {
-    console.log(`Logged in as ${req.user.id}, ${req.user.email}`);
+    console.log(`${req.user.id} Login`);
     res.redirect('/user');
 });
 
@@ -76,6 +76,7 @@ app.get('/logout', isOauthed, (req, res) => {
     if (err) {
        return res.send('err');
     } else {
+       console.log(`${req.user.id} Logout`);
        res.clearCookie('connect.sid', { path: '/' });
        return res.redirect('/home');
     };
@@ -85,3 +86,4 @@ app.get('/logout', isOauthed, (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
 });
+
