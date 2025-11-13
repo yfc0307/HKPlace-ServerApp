@@ -26,17 +26,17 @@ app.use(cookieParser());
 app.use(express.static('public'));
 app.use("/img", express.static('/public/assets/img')); // virtual path
 
-app.get('/', isOauthed, (req, res) => {
-    res.redirect('/user');
+app.get('/', (req, res) => {
+    res.redirect('/home');
 });
 
 app.get('/home',(req,res) => {
-    res.render('home');
+    res.render('home', {req: req});
 });
 
 app.get('/user', isOauthed, (req, res) => {
-    console.log('Logged in');
-    res.render('user', {user: req.user});
+    console.log(`Logged in as ${req.user.email}`);
+    res.render('user', {user: req.user, req: req});
 });
 
 app.get('/oauth/google/callback', 
@@ -60,7 +60,7 @@ app.get('/logout', isOauthed, (req, res) => {
        return res.send('err');
     } else {
        res.clearCookie('connect.sid', { path: '/' });
-       return res.redirect('/');
+       return res.redirect('/home');
     };
   });
 });

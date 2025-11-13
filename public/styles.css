@@ -1,0 +1,257 @@
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    background: linear-gradient(135deg, #00cee9 0%, #1558d4 100%); 
+    margin: 0; 
+    padding-top: 80px; 
+    padding-left: 20px; 
+    padding-right: 20px; 
+    padding-bottom: 20px; 
+    min-height: 100vh;
+}
+
+.navbar {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    background: white; 
+    padding: 10px 20px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+    z-index: 1000; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+}
+
+.navbar h1 {
+    margin: 0; 
+    color: #007cba;
+}
+
+.navbar h1 a {
+    color: #007cba;
+    text-decoration: none;
+}
+
+.navbar h1 a:hover {
+    color: #005a87;
+}
+
+.navbar a {
+    margin: 0 5px; 
+    padding: 8px 16px; 
+    color: white; 
+    text-decoration: none; 
+    border-radius: 5px;
+}
+
+.navbar .game-btn {
+    background: #007cba;
+}
+
+.navbar .study-btn {
+    background: #28a745;
+}
+
+.navbar .login-btn {
+    background: #27d5bb;
+}
+
+.container { 
+    display: flex; 
+    gap: 20px; 
+    max-width: 1800px; 
+    margin: 0 auto; 
+}
+
+#map { 
+    height: 600px; 
+    width: 70%; 
+}
+
+#info-panel { 
+    width: 30%; 
+    background: white; 
+    padding: 20px; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+}
+
+#refresh-btn, #learn-btn { 
+    margin-top: 15px; 
+    padding: 10px 20px; 
+    background: #007cba; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer;
+    width: 100%;
+    display: block;
+}
+
+#refresh-btn:hover, #learn-btn:hover { 
+    background: #005a87; 
+}
+
+#refresh-btn:disabled { 
+    background: #ccc; 
+    cursor: not-allowed; 
+}
+
+#learn-btn {
+    background: #28a745;
+    margin-top: 10px;
+}
+
+#learn-btn:hover {
+    background: #218838;
+}
+
+#selection { 
+    font-size: 1.2em; 
+    margin: 20px 0; 
+    color: #333; 
+    text-align: center; 
+}
+
+#coordinates {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    color: #333;
+}
+
+.custom-marker { 
+    background: none; 
+    border: none; 
+}
+
+/* Login Page Styles */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px);
+    padding: 20px;
+}
+
+.login-card {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-header h2 {
+    color: #007cba;
+    margin: 0 0 8px 0;
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+.login-header p {
+    color: #666;
+    margin: 0 0 30px 0;
+    font-size: 0.95em;
+}
+
+.login-form {
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: #333;
+    font-weight: 500;
+    font-size: 0.9em;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #007cba;
+    box-shadow: 0 0 0 3px rgba(0,124,186,0.1);
+}
+
+.form-group input::placeholder {
+    color: #999;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    background: #007cba;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+.login-btn:hover {
+    background: #005a87;
+}
+
+.login-footer {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e1e5e9;
+}
+
+.login-footer p {
+    margin: 0;
+    color: #666;
+    font-size: 0.9em;
+}
+
+.register-link {
+    color: #007cba;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.register-link:hover {
+    color: #005a87;
+    text-decoration: underline;
+}
+
+/* Authentication Page Styles */
+.auth-message {
+    text-align: center;
+    padding: 20px;
+}
+
+.auth-message h2 {
+    margin: 0 0 15px 0;
+    font-size: 1.5em;
+}
+
+.auth-message p {
+    color: #666;
+    margin: 0;
+    font-size: 1em;
+}
