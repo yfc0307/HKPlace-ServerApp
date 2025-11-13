@@ -39,7 +39,6 @@ app.get('/home',(req,res) => {
 });
 
 app.get('/user', isOauthed, (req, res) => {
-    console.log(`Logged in as ${req.user.id}, ${req.user.email}`);
     res.render('user', {user: req.user, req: req});
 });
 
@@ -53,10 +52,16 @@ app.get('/study', isOauthed, (req,res) => {
 
 app.get('/oauth/google/callback', 
     passport.authenticate('google', {
-        successRedirect: '/user',
+        successRedirect: '/oauth/success',
         failureRedirect: '/oauth/failure',
     })
 );
+
+app.get('/oauth/success', (req,res) => {
+    console.log(`Logged in as ${req.user.id}, ${req.user.email}`);
+    res.redirect('/user');
+});
+
 
 app.get('/oauth/failure', (req,res) => {
     res.send('Authentication Failed');
