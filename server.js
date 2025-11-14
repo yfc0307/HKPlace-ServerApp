@@ -3,6 +3,26 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
+// Below is mongoose part
+
+const uri = '';
+
+const mongoose = require('mongoose');
+
+const userSchema = require('./models/user');
+const User = mongoose.model('User', userSchema);
+
+async function mongoConnect() {
+    await mongoose.connect(uri);
+    console.log('Mongoose Connected');
+}
+
+mongoConnect()
+	.catch((err) => console.log(err))
+	.finally()
+
+// Below is OAuth
+
 require('./oauth');
 
 const passport = require('passport');
@@ -26,6 +46,9 @@ app.use(cookieParser());
 app.use(express.static('public'));
 app.use("/img", express.static('/public/assets/img')); // virtual path
 
+
+// Routings
+
 app.get('/', (req, res) => {
     res.redirect('/home');
 });
@@ -38,9 +61,16 @@ app.get('/home',(req,res) => {
     }
 });
 
-app.get('/user', isOauthed, (req, res) => {
-    res.render('user', {user: req.user, req: req});
-});
+app.get('/user', isOauthed, async (req, res) => { try {
+    const userData = await User.findOne({ gid: req.user.id }, '-_id').lean().exec();
+    //console.log(userData.email);
+    //console.log(userData.uname);
+    //console.log(userData.level);
+    res.render('user', {user: req.user, req: req, email: userData.email, uname: userData.uname, level: userData.level});
+} catch (err) { 
+    console.log('DB error:', err);
+    res.status(500).send('Server error');
+}});
 
 app.get('/game', isOauthed, (req,res) => {
     res.render('game', {req: req});
@@ -57,11 +87,33 @@ app.get('/oauth/google/callback',
     })
 );
 
-app.get('/oauth/success', (req,res) => {
-    console.log(`${req.user.id} Login`);
-    res.redirect('/user');
-});
+app.get('/oauth/success', async (req, res) => {
+  try {
+    console.log(new Date().toString(), `${req.user.id} Login`);
+    // wait for DB result
+    const existing = await User.findOne({ gid: req.user.id }).exec();
+    // console.log(existing);
+    if (!existing) {
+      // create new user only if not found
+      const user = new User({
+        gid: req.user.id,
+        uname: req.user.displayName,
+        email: req.user.email,
+        level: 1
+      });
+      await user.save();
+      console.log(new Date().toString(), 'New user created:', user._id);
+    } else {
+      console.log(new Date().toString(), 'User already exists:', existing._id);
+      // optionally update existing user's info here
+    }
 
+    res.redirect('/user');
+  } catch (err) {
+    console.error('Error in /oauth/success:', err);
+    res.status(500).send('Server error');
+  }
+});
 
 app.get('/oauth/failure', (req,res) => {
     res.send('Authentication Failed');
@@ -76,7 +128,7 @@ app.get('/logout', isOauthed, (req, res) => {
     if (err) {
        return res.send('err');
     } else {
-       console.log(`${req.user.id} Logout`);
+       console.log(new Date().toString(), `${req.user.id} Logout`);
        res.clearCookie('connect.sid', { path: '/' });
        return res.redirect('/home');
     };
@@ -84,6 +136,11 @@ app.get('/logout', isOauthed, (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on ${PORT}`);
+  console.log(new Date().toString(), `Server is running on ${PORT}`);
 });
+
+
+
+
+
 
