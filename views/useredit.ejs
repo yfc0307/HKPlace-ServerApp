@@ -23,10 +23,12 @@
     <% if (!req.user) { %>
         <h3>Home, Please Login!</h3>
     <% } else { %>
-        <h3>Welcome, <%= uname %>!</h3>
-        <h3>Email: <%= email %></h3>
-        <h3>Game Level: <%= level %></h3>
-        <a href="/user/edit" class="login-btn">Change Username</a>
+        <h3>Your current username: <%= uname %>!</h3>
+        <form action="/user/edit/" method="POST">
+            <label for="uname">Input new Username:</label>
+            <input type="text" id="uname" name="uname" required>
+            <button type="submit">Update</button>
+        </form>
     <% } %>
 </body>
 </html>
