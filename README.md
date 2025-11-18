@@ -1,5 +1,6 @@
 # URL:
 https://hkplace-serverapp.onrender.com/
+https://hkplace-serverapp.onrender.com/add/comment/Aberdeen
 
 # CRUD Commands
 - GET `curl "https://hkplace-serverapp.onrender.com/api/comment/Aberdeen"`
