@@ -10,8 +10,8 @@
     <nav class="navbar">
         <h1><a href="/home">HKPlace</a></h1>
         <div>
-            <a href="game.html" class="game-btn">Game</a>
-            <a href="study.html" class="study-btn">Study</a>
+            <a href="/game" class="game-btn">Game</a>
+            <a href="/study" class="study-btn">Study</a>
             <% if (!req.user) { %>
                 <a href="/oauth/google" class="login-btn">Login with Google</a>
             <% } else { %>
@@ -32,5 +32,6 @@
     <% } %>
 </body>
 </html>
+
 
 
