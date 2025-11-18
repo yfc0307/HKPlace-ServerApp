@@ -24,7 +24,7 @@
         <h3>Home, Please Login!</h3>
     <% } else { %>
         <h3>Your current username: <%= uname %>!</h3>
-        <form action="/user/edit/" method="POST">
+        <form action="/user/edit/" method="PUT">
             <label for="uname">Input new Username:</label>
             <input type="text" id="uname" name="uname" required>
             <button type="submit">Update</button>
@@ -32,3 +32,4 @@
     <% } %>
 </body>
 </html>
+
