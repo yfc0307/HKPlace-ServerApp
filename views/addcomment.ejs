@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HKPlace - Discover Hong Kong</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <h1><a href="/home">HKPlace</a></h1>
+        <div>
+            <a href="game.html" class="game-btn">Game</a>
+            <a href="study.html" class="study-btn">Study</a>
+            <% if (!req.user) { %>
+                <a href="/oauth/google" class="login-btn">Login with Google</a>
+            <% } else { %>
+                <a href="/user" class="user-btn">Profile</a>
+                <a href="/logout" class="login-btn">Logout</a>
+            <% } %>
+        </div>
+    </nav>
+    <% if (!req.user) { %>
+        <h3>Home, Please Login!</h3>
+    <% } else { %>
+        <h3>Logged in as: <%= uname %>!</h3>
+        <form action="/add/comment/" method="POST">
+            <input type="hidden" id="location" name="location" value="<%= location %>">
+            <input type="hidden" id="gid" name="gid" value="<%= gid %>">
+            <label for="content">Write your comment about <%= location %>:</label>
+            <textarea type="text" id="content" name="content" required></textarea>
+            <button type="submit">Comment</button>
+        </form>
+    <% } %>
+</body>
+</html>

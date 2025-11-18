@@ -12,7 +12,9 @@ const uri = '';
 const mongoose = require('mongoose');
 
 const userSchema = require('./models/user');
+const commentSchema = require('./models/comment');
 const User = mongoose.model('User', userSchema);
+const Comment = mongoose.model('comments', commentSchema);
 
 async function mongoConnect() {
     await mongoose.connect(uri);
@@ -74,8 +76,16 @@ app.get('/user', isOauthed, async (req, res) => { try {
     res.status(500).send('Server error');
 }});
 
+
+// User Edit
+
 app.get('/user/edit', isOauthed, async (req, res) => { try {
     const userData = await User.findOne({ gid: req.user.id }, '-_id').lean().exec();
+    
+    if (!userData) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+    
     res.render('useredit', {user: req.user, req: req, email: userData.email, uname: userData.uname, level: userData.level});
 } catch (err) { 
     console.log('DB error:', err);
@@ -105,7 +115,100 @@ app.post('/user/edit/', isOauthed, async (req, res) => {
     }
 });
 
-//app.post('/api/location/', (req, res)
+
+app.get('/add/comment/:location', isOauthed, async (req, res) => {
+    try {
+        const location = req.params.location;
+        if (!location) {
+            return res.status(400).json({ error: 'Missing location parameter.'});
+        }
+        
+        const userData = await User.findOne({ gid: req.user.id }).lean().exec();
+        
+        if (!userData) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        
+        res.render('addcomment', { req: req, uname: userData.uname, location: location, gid: req.user.id });
+    } catch (err) {
+        console.log('Update error:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+app.post('/add/comment/', isOauthed, async (req, res) => {
+    try {
+        const location = req.body.location;
+        const gid = req.body.gid;
+        const content = req.body.content;
+        
+        const newComment = new Comment({
+            _id: new mongoose.Types.ObjectId(),
+            location: location,
+            gid: gid,
+            content: content,
+            time: new Date().toString()
+        });
+        
+        const updateResult = await newComment.save();
+        
+        console.log(new Date().toString(), `Added comment by ${gid}`);
+        res.redirect('/home');
+        
+    } catch (err) {
+        console.log('Update error:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+
+// RESTful API for demo POST
+// CURD Command: curl -X POST -d 'location=Stanley&content=Good' "localhost:3000/api/add/comment/"
+app.post('/api/add/comment/', async (req, res) => {
+    try {
+        const location = req.body.location;
+        const gid = 'Guest';
+        const content = req.body.content;
+        
+        const newComment = new Comment({
+            _id: new mongoose.Types.ObjectId(),
+            location: location,
+            gid: gid,
+            content: content,
+            time: new Date().toString()
+        });
+        
+        const updateResult = await newComment.save();
+        
+        console.log(new Date().toString(), `Added comment by ${gid}`);
+        
+    } catch (err) {
+        console.log('Update error:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+// RESTful API for demo DELETE using parameters in URL
+// CURD Command: curl -X DELETE "localhost:3000/api/delete/comment/Guest"
+app.delete('/api/delete/comment/:gid', async (req, res) => {
+    try {
+        if (!req.params.gid) {
+            return res.status(400).json({ error: 'Missing gid parameter.'});
+        }
+        
+        const deleteResult = await Comment.deleteMany({ gid: req.params.gid });
+        
+        if (deleteResult) {
+            console.log(new Date().toString(), `Deleted comments: ${deleteResult.acknowledged}, ${deleteResult.deletedCount} document deleted`);
+        } else {
+            console.log(new Date().toString(), `Delete comments failed.`);
+        }
+    } catch (err) {
+        console.log('Update error:', err);
+        res.status(500).send('Server error');
+    }
+});
+
 
 app.get('/game', isOauthed, (req,res) => {
     res.render('game', {req: req});
