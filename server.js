@@ -47,6 +47,7 @@ app.use(session({
   },
   proxy: true // IMPORTANT for cloud deployments behind reverse proxies
 })); // cookie only lasts 60 mins
+app.set('trust proxy', 1); // Trust first proxy (Render.com uses proxies)
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -288,6 +289,7 @@ app.get('/logout', isOauthed, (req, res) => {
 app.listen(PORT, () => {
   console.log(new Date().toString(), `Server is running on ${PORT}`);
 });
+
 
 
 
