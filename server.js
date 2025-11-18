@@ -175,6 +175,18 @@ app.post('/add/comment/', isOauthed, async (req, res) => {
     }
 });
 
+// RESTful API for demo GET
+// CRUD Command: curl "localhost:3000/api/comment/Aberdeen"
+app.get('/api/comment/:location', async (req, res) => {
+    try {
+        const loc = req.params.location;
+        const getResult = await Comment.find({ location: loc });
+        res.status(200).type('json').json(getResult).end();
+    } catch (err) {
+        console.log('Update error:', err);
+        res.status(500).send('Server error');
+    }
+});
 
 // RESTful API for demo POST
 // CURD Command: curl -X POST -d 'location=Stanley&content=Good' "localhost:3000/api/add/comment/"
@@ -291,6 +303,7 @@ app.get('/logout', isOauthed, (req, res) => {
 app.listen(PORT, () => {
   console.log(new Date().toString(), `Server is running on ${PORT}`);
 });
+
 
 
 
