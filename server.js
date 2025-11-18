@@ -188,6 +188,23 @@ app.get('/api/comment/:location', async (req, res) => {
     }
 });
 
+// RESTful API for demo PUT
+// Scenario: change all comments send by Guest to "Modified"
+// CRUD Command: curl -X PUT -d 'content=Modified' "localhost:3000/api/comment/Guest"
+app.put('/api/comment/:gid', async (req, res) => {
+    try {
+		const modified_content = req.body.content;
+        const putResult = await Comment.updateMany(
+			{ gid: req.params.gid },
+			{ $set: { content: modified_content } }
+		);
+        res.status(200).type('json').json(putResult).end();
+    } catch (err) {
+        console.log('Update error:', err);
+        res.status(500).send('Server error');
+    }
+});
+
 // RESTful API for demo POST
 // CURD Command: curl -X POST -d 'location=Stanley&content=Good' "localhost:3000/api/add/comment/"
 app.post('/api/add/comment/', async (req, res) => {
@@ -303,6 +320,7 @@ app.get('/logout', isOauthed, (req, res) => {
 app.listen(PORT, () => {
   console.log(new Date().toString(), `Server is running on ${PORT}`);
 });
+
 
 
 
