@@ -222,9 +222,8 @@ app.post('/api/add/comment/', async (req, res) => {
         });
         
         const updateResult = await newComment.save();
-        
         console.log(new Date().toString(), `Added comment by ${gid}`);
-        
+        res.status(200).type('json').json(updateResult).end();
     } catch (err) {
         console.log('Update error:', err);
         res.status(500).send('Server error');
@@ -246,6 +245,7 @@ app.delete('/api/delete/comment/:gid', async (req, res) => {
         } else {
             console.log(new Date().toString(), `Delete comments failed.`);
         }
+		res.status(200).type('json').json(deleteResult).end();
     } catch (err) {
         console.log('Update error:', err);
         res.status(500).send('Server error');
@@ -320,6 +320,7 @@ app.get('/logout', isOauthed, (req, res) => {
 app.listen(PORT, () => {
   console.log(new Date().toString(), `Server is running on ${PORT}`);
 });
+
 
 
 
