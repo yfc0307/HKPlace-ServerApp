@@ -106,7 +106,7 @@ app.get('/user/edit', isOauthed, async (req, res) => { try {
     res.status(500).send('Server error');
 }});
 
-app.put('/user/edit/', isOauthed, async (req, res) => {
+app.post('/user/edit/', isOauthed, async (req, res) => {
     try {
         const new_uname = req.body.uname;
         
@@ -303,6 +303,7 @@ app.get('/logout', isOauthed, (req, res) => {
 app.listen(PORT, () => {
   console.log(new Date().toString(), `Server is running on ${PORT}`);
 });
+
 
 
 
