@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 // Below is mongoose part
 
-const uri = '';
+const uri = process.env.MONGODB_URI;
 
 const mongoose = require('mongoose');
 
@@ -277,6 +277,7 @@ app.get('/logout', isOauthed, (req, res) => {
 app.listen(PORT, () => {
   console.log(new Date().toString(), `Server is running on ${PORT}`);
 });
+
 
 
 
