@@ -8,7 +8,7 @@ const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET; // input the goog
 passport.use(new GoogleStrategy({
     clientID:     GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/oauth/google/callback",
+    callbackURL: "https://hkplace-serverapp.onrender.com/oauth/google/callback",
     passReqToCallback   : true
   },
   function(request, accessToken, refreshToken, profile, done) {
@@ -23,4 +23,5 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done){
     done(null, user);
 });
+
 
