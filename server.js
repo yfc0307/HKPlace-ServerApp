@@ -34,20 +34,22 @@ const passport = require('passport');
 app.set('view engine', 'ejs');
 
 const session = require('express-session');
+
+app.set('trust proxy', 1);
+
+// Update your session configuration to include sameSite
 app.use(session({ 
-  secret: process.env.SESSION_SECRET || "hkplace", // Use env variable
+  secret: process.env.SESSION_SECRET || "hkplace",
   resave: false, 
-  saveUninitialized: false, 
+  saveUninitialized: false,
+  proxy: true, // Add this
   cookie: { 
     httpOnly: true, 
     secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // CRITICAL
-    maxAge: 60*60*1000,
-    domain: process.env.COOKIE_DOMAIN || undefined // May need to set this
-  },
-  proxy: true // IMPORTANT for cloud deployments behind reverse proxies
-})); // cookie only lasts 60 mins
-app.set('trust proxy', 1); // Trust first proxy (Render.com uses proxies)
+    sameSite: 'none', // Add this - required for OAuth redirects over HTTPS
+    maxAge: 60*60*1000 
+  } 
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -289,6 +291,7 @@ app.get('/logout', isOauthed, (req, res) => {
 app.listen(PORT, () => {
   console.log(new Date().toString(), `Server is running on ${PORT}`);
 });
+
 
 
 
