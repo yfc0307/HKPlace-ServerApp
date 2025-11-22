@@ -72,7 +72,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/home',async (req,res) => {
-    const comData = await Comment.find().sort({$natural:-1}).limit(1).lean().exec();
+    const comData = await Comment.find().sort({$natural:-1}).limit(1);
     if (!req.isAuthenticated()) {
         res.render('home', {req: req, location: comData.location, comment: comData.content, msg: "Please login to unlock all features."});
     } else {
