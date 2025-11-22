@@ -72,12 +72,24 @@ app.get('/', (req, res) => {
 });
 
 app.get('/home',async (req,res) => {
-    const comData = await Comment.findOne().sort({$natural:-1});
-	console.log(comData);
+    const comData = await Comment.find().sort({$natural:-1}).limit(1);
+    const latestComment = comData && comData.length > 0 ? comData[0] : null;
+    
     if (!req.isAuthenticated()) {
-        res.render('home', {req: req, location: comData[0]?.location, comment: comData[0]?.content, msg: "Please login to unlock all features."});
+        res.render('home', {
+            req: req, 
+            location: latestComment?.location || 'No location yet', 
+            comment: latestComment?.content || 'No comments yet', 
+            msg: "Please login to unlock all features."
+        });
     } else {
-        res.render('home', {req: req, user: req.user, location: comData[0]?.location, comment: comData[0]?.content, msg: `Welcome, ${req.user.displayName}.`});
+        res.render('home', {
+            req: req, 
+            user: req.user, 
+            location: latestComment?.location || 'No location yet', 
+            comment: latestComment?.content || 'No comments yet', 
+            msg: `Welcome, ${req.user.displayName}.`
+        });
     }
 });
 
@@ -322,6 +334,7 @@ app.get('/logout', isOauthed, (req, res) => {
 app.listen(PORT, () => {
   console.log(new Date().toString(), `Server is running on ${PORT}`);
 });
+
 
 
 
