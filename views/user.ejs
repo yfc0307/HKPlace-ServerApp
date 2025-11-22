@@ -27,6 +27,15 @@
         <h3>Email: <%= email %></h3>
         <h3>Game Level: <%= level %></h3>
         <a href="/user/edit" class="login-btn">Change Username</a>
+        
+        <form action="/add/comment/" method="POST">
+            <select id="location" name="location" size="3">
+                <option value="volvo">Aberdeen</option>
+                <option value="saab">Stanley</option>
+            </select>
+            <textarea type="text" id="content" name="content" required></textarea>
+            <button type="submit">Comment</button>
+        </form>
     <% } %>
 </body>
 </html>
