@@ -71,11 +71,12 @@ app.get('/', (req, res) => {
     res.redirect('/home');
 });
 
-app.get('/home',(req,res) => {
+app.get('/home',async (req,res) => {
+    const comData = await Comment.find().sort({$natural:-1}).limit(1).lean().exec();
     if (!req.isAuthenticated()) {
-        res.render('home', {req: req, msg: "Please login to unlock all features."});
+        res.render('home', {req: req, location: comData.location, comment: comData.content, msg: "Please login to unlock all features."});
     } else {
-        res.render('home', {req: req, user: req.user, msg: `Welcome, ${req.user.displayName}.`});
+        res.render('home', {req: req, user: req.user, location: comData.location, comment: comData.content, msg: `Welcome, ${req.user.displayName}.`});
     }
 });
 
