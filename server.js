@@ -73,6 +73,7 @@ app.get('/', (req, res) => {
 
 app.get('/home',async (req,res) => {
     const comData = await Comment.findOne().sort({$natural:-1});
+	console.log(comData);
     if (!req.isAuthenticated()) {
         res.render('home', {req: req, location: comData[0]?.location, comment: comData[0]?.content, msg: "Please login to unlock all features."});
     } else {
@@ -321,6 +322,7 @@ app.get('/logout', isOauthed, (req, res) => {
 app.listen(PORT, () => {
   console.log(new Date().toString(), `Server is running on ${PORT}`);
 });
+
 
 
 
