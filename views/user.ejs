@@ -27,16 +27,8 @@
         <h3>Email: <%= email %></h3>
         <h3>Game Level: <%= level %></h3>
         <a href="/user/edit" class="login-btn">Change Username</a>
-        
-        <form action="/add/comment/" method="POST">
-            <select id="location" name="location" size="3">
-                <option value="volvo">Aberdeen</option>
-                <option value="saab">Stanley</option>
-            </select>
-            <input type="hidden" id="gid" name="gid" value="<%= omggid %>">
-            <textarea type="text" id="content" name="content" required></textarea>
-            <button type="submit">Comment</button>
-        </form>
+        <a href="/add/comment/Aberdeen" class="login-btn">Comment about Aberdeen</a>
+        <a href="/add/comment/Stanley" class="login-btn">Comment about Stanley</a>
     <% } %>
 </body>
 </html>
