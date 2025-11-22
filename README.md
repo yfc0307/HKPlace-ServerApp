@@ -1,6 +1,6 @@
 # HKPlace-ServerApp
 
-HKPlace-ServerApp is a Node.js web application for submitting and viewing comments about locations in Hong Kong. It supports user authentication via OAuth (Google), user profile management, and CRUD (Create, Read, Update, Delete) operations for comments. The app uses MongoDB for data storage and EJS for its templating engine, providing both RESTful API endpoints and user-friendly web pages.
+HKPlace-ServerApp is a Node.js web application for submitting and viewing comments about locations in Hong Kong. It supports user authentication via OAuth (Google), user profile management, and CRUD (Create, Read, Update, Delete) operations for comments. The app uses MongoDB for data storage and EJS for its templating engine, providing both RESTful API endpoints and user-friendly web pages. The Game and Study feature will be added in future updates.
 
 ## Project URLs
 - Main Site: https://hkplace-serverapp.onrender.com/
