@@ -84,7 +84,7 @@ app.get('/user', isOauthed, async (req, res) => { try {
     //console.log(userData.email);
     //console.log(userData.uname);
     //console.log(userData.level);
-    res.render('user', {user: req.user, gid: req.user.gid, req: req, email: userData.email, uname: userData.uname, level: userData.level});
+    res.render('user', {user: req.user, omggid: req.user.gid, req: req, email: userData.email, uname: userData.uname, level: userData.level});
 } catch (err) { 
     console.log('DB error:', err);
     res.status(500).send('Server error');
