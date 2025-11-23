@@ -164,6 +164,27 @@ app.get('/add/comment/:location', isOauthed, async (req, res) => {
     }
 });
 
+app.get('/delete/comment', isOauthed, async (req, res) => {
+	try {
+		const userData = await User.findOne({ gid: req.user.id }).lean().exec();
+
+		if (!userData) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+		const deleteResult = await Comment.deleteMany({ gid: req.user.id });
+		if (deleteResult) {
+            console.log(new Date().toString(), `Deleted comments: ${deleteResult.acknowledged}, ${deleteResult.deletedCount} document deleted`);
+        } else {
+            console.log(new Date().toString(), `Delete comments failed.`);
+        }
+		res.redirect('/home');
+		} catch (err) {
+        console.log('Update error:', err);
+        res.status(500).send('Server error');
+    }
+});
+
 app.post('/add/comment/', isOauthed, async (req, res) => {
     try {
         const location = req.body.location;
@@ -334,6 +355,8 @@ app.get('/logout', isOauthed, (req, res) => {
 app.listen(PORT, () => {
   console.log(new Date().toString(), `Server is running on ${PORT}`);
 });
+
+
 
 
 
