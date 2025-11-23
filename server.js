@@ -164,7 +164,7 @@ app.get('/add/comment/:location', isOauthed, async (req, res) => {
     }
 });
 
-app.get('delete/comment/', isOauthed, async (req, res) => {
+app.get('/delete/comment', isOauthed, async (req, res) => {
 	try {
 		const userData = await User.findOne({ gid: req.user.id }).lean().exec();
 
@@ -355,6 +355,7 @@ app.get('/logout', isOauthed, (req, res) => {
 app.listen(PORT, () => {
   console.log(new Date().toString(), `Server is running on ${PORT}`);
 });
+
 
 
 
